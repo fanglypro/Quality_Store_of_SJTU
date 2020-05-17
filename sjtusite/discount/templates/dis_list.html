@@ -1,61 +1,14 @@
 <!--对应于shop_list.html，在显示优惠信息下的情况-->
 
-{% extends 'dis_base.html' %}
-
-{% block title %}交大优铺{% endblock %}
-
-{% block 'nav_shop_active' %}active{% endblock %}
-
-{% load staticfiles %}
-{% block header_extends %}
-    <link rel="stylesheet" href="{% static 'shop/shop.css' %}">
+{% extends 'shop/shop_list.html' %}
+{% block dis_list_return %}
+    <p><a href="/shop/">返回</a><p>
 {% endblock %}
-
-{% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 col-md-8">
-                <div class="panel panel-default">
-                        <div class="panel-heading">
-                            {% block shop_list_title %}
-                                店铺列表（一共有{{ shops|length }}个店铺）
-                                <h5 class="text-right"><a href="/shop/">屏蔽优惠信息</a></h5>
-                            {% endblock %}
-                        </div>
-                    <div class="panel-body">
-                         {% for shop in shops %}
-                            <div class="shop">
-                                <h3><a href="{% url 'discount:discount_detail' shop.pk %}">{{ shop.name }}</a></h3>
-                                <p class="shop-info">
-                                    <span class="glyphicon glyphicon-tag"></span><a href="{% url 'discount:discount_type' shop.shop_type.pk %}">{{ shop.shop_type }}</a>
-                                </p>
-                                <p>{{ shop.content|truncatechars:50|linebreaksbr }}</p>
-                                {% for discount in discounts %}
-                                    {% if discount.shop.name == shop.name %}
-                                        <b> 优惠活动：{{ discount.body }}  </b>
-                                        <br>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                         {% endfor %}
-                    </div>
-                </div>
-               
-            </div>
-            <div class="col-sm-4 col-md-4">
-                <div class="panel panel-default">
-                  <div class="panel-heading">店铺分类</div>
-                  <div class="panel-body">
-                    <ul class="shop-types">
-                        {% for shop_type in shop_types %}
-                            <li><a href="{% url 'discount:discount_type' shop_type.pk %}">{{ shop_type.type_name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+{% block dis_content %}
+    {% for discount in discounts %}
+        {% if discount.shop.name == shop.name %}
+            <b> 优惠活动：{{ discount.body }}  </b>
+            <br>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

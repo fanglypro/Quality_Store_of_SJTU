@@ -12,5 +12,6 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('video/', views.video, name='video'),
     path('logout/', views.logout, name='logout'),
-    path('user/detail/', views.User_detail.as_view(), name='user_detail')
+    path('cpwd/', views.change_pwd, name='changepwd'),
+    path('user/detail/', views.User_detail.as_view(), name='user_detail'),
 ]

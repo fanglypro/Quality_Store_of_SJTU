@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load comments_extras %}
+{% load likes_tags %}
 
 {% block title %}
     {{ shop.name }}
@@ -9,7 +10,7 @@
 
 {% load static  %}
 {% block header_extends %}
-    <link rel="stylesheet" href="{% static 'shop/shop.css' %}">
+    <link rel="stylesheet" href="{% static 'shop.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -42,7 +43,11 @@
     </div>
     <!--section class="comment-area" id="comment-area">#新增评论区模块-->
     <hr>
-    <h4><a href="{% url 'discount:discount_detail' shop.pk %}">显示优惠信息</a></h4>
+    <h4>
+        <a href="{% url 'discount:discount_detail' shop.pk %}">显示优惠信息</a>
+        <span>{% block dis_detail_return %}{% endblock %}</span>
+    </h4>
+    {% block dis_detail %}{% endblock %}
     <hr>
       <h3>发表评论</h3>
     {% show_comment_form shop %}
@@ -52,3 +57,7 @@
     </section>
 
 {% endblock %} 
+
+{% block script_extends %}
+
+{% endblock %}

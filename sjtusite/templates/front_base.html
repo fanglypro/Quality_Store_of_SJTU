@@ -1,33 +1,165 @@
+<!--base for login and singup, and it's different from "base.html"-->
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+<meta charset="utf-8">
+<title>{% block Title %}前段页面{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="css/public.css">
+<style>
+/* === Remove input autofocus webkit === */
+body{font:13px/26px "微软雅黑";}
+*:focus {outline: none;}
+.contact{width:750px;background:#F1F1F1;margin:20px auto;padding:10px;}
+
+/* === Form Typography === */
+.contact_form h2{font-size:25px;font-weight:bold;}
+.contact_form label{font-size:14px;}
+.form_hint, .required_notification{font-size: 12px;}
+
+/* === List Styles === */
+.contact_form ul {width:720px;list-style-type:none;list-style-position:outside;padding:0px;}
+.contact_form li{padding:12px; border-bottom:1px solid #DFDFDF;position:relative;}
+.contact_form li:first-child, .contact_form li:last-child {border-bottom:1px solid #777;}
+
+/* === Form Header === */
+.contact_form h2 {margin:0;display: inline;}
+.required_notification {color:#d45252; margin:5px 0 0 0; display:inline;float:right;}
+
+/* === Form Elements === */
+.contact_form label {width:150px;margin-top: 3px;display:inline-block;float:left;padding:3px;}
+.contact_form input {height:20px; width:220px; padding:5px 8px;}
+.contact_form textarea {padding:8px; width:300px;}
+.contact_form button {margin-left:156px;}
+
+    /* form element visual styles */
+.contact_form input, .contact_form textarea {
+    border:1px solid #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
+    border-radius:2px;
+    padding-right:30px;
+    -moz-transition: padding .25s;
+    -webkit-transition: padding .25s;
+    -o-transition: padding .25s;
+    transition: padding .25s;
+}
+.contact_form input:focus, .contact_form textarea:focus {
+    background: #fff url(images/red_asterisk.png) no-repeat;
+    border:1px solid #555;
+    box-shadow: 0 0 3px #aaa;
+    padding-right:70px;
+}
+
+/* === HTML5 validation styles === */
+.contact_form input:required, .contact_form textarea:required {background: #fff url(images/red_asterisk.png) no-repeat 98% center;}
+.contact_form input:required:valid, .contact_form textarea:required:valid {background: #fff url(images/valid.png) no-repeat 98% center;box-shadow: 0 0 5px #5cd053;border-color: #28921f;}
+.contact_form input:focus:invalid, .contact_form textarea:focus:invalid {background: #fff url(images/invalid.png) no-repeat 98% center;box-shadow: 0 0 5px #d45252;border-color: #b03535;}
+
+/* === Form hints === */
+.form_hint {
+    background: #d45252;
+    border-radius: 3px 3px 3px 3px;
+    color: white;
+    margin-left:8px;
+    padding: 1px 6px;
+    z-index: 999;
+    position: absolute;
+    display: none;
+}
+.form_hint::before {
+    content: "\25C0";
+    color:#d45252;
+    position: absolute;
+    top:1px;
+    left:-6px;
+}
+.contact_form input:focus + .form_hint {display: inline;}
+.contact_form input:required:valid + .form_hint {background: #28921f;}
+.contact_form input:required:valid + .form_hint::before {color:#28921f;}
+
+/* === Button Style === */
+button.submit {
+    background-color: #68b12f;
+    background: -webkit-gradient(linear, left top, left bottom, from(#68b12f), to(#50911e));
+    background: -webkit-linear-gradient(top, #68b12f, #50911e);
+    background: -moz-linear-gradient(top, #68b12f, #50911e);
+    background: -ms-linear-gradient(top, #68b12f, #50911e);
+    background: -o-linear-gradient(top, #68b12f, #50911e);
+    background: linear-gradient(top, #68b12f, #50911e);
+    border: 1px solid #509111;
+    border-bottom: 1px solid #5b992b;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    box-shadow: inset 0 1px 0 0 #9fd574;
+    -webkit-box-shadow: 0 1px 0 0 #9fd574 inset ;
+    -moz-box-shadow: 0 1px 0 0 #9fd574 inset;
+    -ms-box-shadow: 0 1px 0 0 #9fd574 inset;
+    -o-box-shadow: 0 1px 0 0 #9fd574 inset;
+    color: white;
+    font-weight: bold;
+    padding: 6px 20px;
+    text-align: center;
+    text-shadow: 0 -1px 0 #396715;
+}
+button.submit:hover {
+    opacity:.85;
+    cursor: pointer;
+}
+button.submit:active {
+    border: 1px solid #20911e;
+    box-shadow: 0 0 10px 5px #356b0b inset;
+    -webkit-box-shadow:0 0 10px 5px #356b0b inset ;
+
+    -moz-box-shadow: 0 0 10px 5px #356b0b inset;
+    -ms-box-shadow: 0 0 10px 5px #356b0b inset;
+    -o-box-shadow: 0 0 10px 5px #356b0b inset;
+
+}
+</style>
+    <script src="http://www.jiawin.com/wp-content/themes/javin/js/jquery.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function($){
+        $('#ads_close').click(function(e){
+            $('#ads_box').fadeOut();
+            e.preventDefault();
+        });
+    });
+</script>
     <meta charset="UTF-8">
-    <title>交大优铺</title>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    {% block head %}{% endblock %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
 </head>
 <body>
-    <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">交大优铺</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/">首页<span class="sr-only">(current)</span></a></li>
-        <li><a href="{% url 'front:blog' %}">功能<span class="sr-only">(current)</span></a></li>
-        <li><a href="{% url 'front:video' %}">功能<span class="sr-only">(current)</span></a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">交大优铺</a>
+                <button class="navbar-toggle collaps" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar-collapse" class="collapse navbar-collapse" >
+                <ul class="nav navbar-nav">
+                    <li class="{% block nav_home_active %}{% endblock %}"><a href="{% url 'home' %}">首页</a>
+                    </li>
+{#                    <li class="{% block nav_shop_active %}{% endblock %}"><a href="{% url 'shop:shop_list' %}">店铺</a>#}
+{#                    </li>#}
+{#                    <li class="{% block nav_search_active %}{% endblock %}"><a href="{% url 'shop:shop_search' %}">搜索</a>#}
+{#                    </li>#}
+{#        <li><a href="{% url 'front:blog' %}">测试功能<span class="sr-only">(current)</span></a></li>#}
+{#        <li><a href="{% url 'front:video' %}">测试功能2<span class="sr-only">(current)</span></a></li>#}
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
         {% if front_user %}
             <li><a href="{% url 'front:user_detail' %}">{{ front_user.username }}</a></li>
             <li><a href="{% url 'front:logout' %}">注销</a></li>
@@ -39,9 +171,14 @@
           <li><a href="{% url 'front:signup' %}">注册</a></li>
         {% endif %}
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-{% block body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+<div class="contact">
+    {% block content %}
+        表单实现部分
+    {% endblock %}
+</div>
 </body>
 </html>

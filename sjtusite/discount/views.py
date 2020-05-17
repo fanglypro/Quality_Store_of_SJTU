@@ -2,13 +2,44 @@ from django.shortcuts import render,get_object_or_404
 from .models import Discount
 from .forms import DiscountForm
 from shop.models import Shop,ShopType
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 def show_discount(request):
     context = {}
-    context['shops'] = Shop.objects.all()
     context['shop_types'] =  ShopType.objects.all()
     context['discounts'] = Discount.objects.all()
+    context['shop_types'] = ShopType.objects.all()
+
+    #------------------------实现分页
+    shop_list = Shop.objects.all()
+    paginator = Paginator(shop_list, 6)  # 每页显示3篇文章
+    page = request.GET.get('page') #页数请求
+
+    context['shop_num']=len(shop_list)
+    #为了实现向前翻页和向后翻页，新增一个模块，计算前一页和后一页的页数
+    if page==None:
+        context['page'] =1
+    else:context['page']=int(page)
+
+    if (context['page']>=2) :
+        context['previous_page'] = context['page']-1
+    else : context['previous_page'] = 1
+
+    if context['page'] < paginator.num_pages:
+        context['next_page']= context['page']+1
+    else:  context['next_page'] = paginator.num_pages
+
+    context['all_page'] = list (range(1,paginator.num_pages+1))#生成页数序列
+    try:
+        context['shops'] = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page参数不是一个整数就返回第一页
+        context['shops'] = paginator.page(1)
+    except EmptyPage:
+        # 如果页数超出总页数就返回最后一页
+        context['shops'] = paginator.page(paginator.num_pages)
+    #-------------------------
     return render(request, 'dis_list.html',context)
 
 def discount_type(request,shop_type_pk):
@@ -18,6 +49,33 @@ def discount_type(request,shop_type_pk):
     context['shop_type'] = shop_type
     context['shop_types'] =  ShopType.objects.all()
     context['discounts']=Discount.objects.all()
+    #------------------------实现分页
+    context['shop_num']=len(context['shops'])
+    paginator = Paginator(context['shops'] , 6)
+    page = request.GET.get('page')
+    context['all_page'] = list (range(1,paginator.num_pages+1))#生成页数序列
+
+    #为了实现向前翻页和向后翻页，新增一个模块，计算前一页和后一页的页数
+    if page==None:
+        context['page'] =1
+    else:context['page']=int(page)
+
+    if (context['page']>=2) :
+        context['previous_page'] = context['page']-1
+    else : context['previous_page'] = 1
+
+    if context['page'] < paginator.num_pages:
+        context['next_page']= context['page']+1
+    else:  context['next_page'] = paginator.num_pages
+
+    try:
+        context['shops'] = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page参数不是一个整数就返回第一页
+        context['shops'] = paginator.page(1)
+    except EmptyPage:
+        # 如果页数超出总页数就返回最后一页
+        context['shops'] = paginator.page(paginator.num_pages)
     return render(request, 'discount_type.html', context)
 
 def discount_detail(request,shop_pk):

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'discount',
     'front',
+    'likes',
 ]
 
 MIDDLEWARE = [

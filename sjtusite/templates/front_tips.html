@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>跳转页面</title>
+</head>
+<body>
+    <div align="center">
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        <span>
+            3s
+        </span>
+        秒钟以后跳转到其他页面
+    </div>
+    <a href="{% url 'home' %}" style="display: block; text-align: center;">点击此处立即跳转</a>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script>
+    <script>
+//        设置3秒钟之后自动跳转界面
+        $(function () {
+            var second = 3;
+            setInterval(function () {
+                second --;
+                $('span').text(second + 's');
+                if (second === 0)
+                {
+                    window.location.href = "{% url 'home' %}"
+                }
+            },1000)
+        })
+    </script>
+
+
+</body>
+</html>

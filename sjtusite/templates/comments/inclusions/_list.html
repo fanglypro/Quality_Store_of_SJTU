@@ -1,3 +1,4 @@
+{% load likes_tags %}
 <h3>评论列表，共 <span>{{ comment_count }}</span> 条评论</h3>
 <ul class="comment-list list-unstyled">
   {% for comment in comment_list %}
@@ -7,8 +8,52 @@
       <div class="text">
         {{ comment.text|linebreaks }}
       </div>
-    </li>
-  {% empty %}
-    暂无评论
-  {% endfor %}
+    <div class="like" onclick="likeChange(this, '{% get_content_type comment %}', {{ comment.pk }})" #}>
+                <span class="glyphicon glyphicon-heart {{ active }}{% get_like_status comment %}"></span>
+                <span class="liked-num">{% get_like_count comment %}</span>
+
+            </div>
+        </li>
+    {% empty %}
+        暂无评论
+    {% endfor %}
 </ul>
+
+<script type="text/javascript">
+
+    function likeChange(obj, content_type, object_id) {
+        var is_like = obj.getElementsByClassName('active').length == 0
+
+        $.ajax({
+            url: "{% url 'like_change' %}",
+            type: 'GET',
+            data: {
+                content_type: content_type,
+                object_id: object_id,
+                is_like: is_like
+
+            },
+            cache: false,
+            success: function (data) {
+                console.log(data)
+                if (data['status'] == 'SUCCESS') {
+                    // 更新点赞状态
+                    var element = $(obj.getElementsByClassName('glyphicon'));
+                    if (is_like) {
+                        element.addClass('active');
+                    } else {
+                        element.removeClass('active');
+                    }
+                    // 更新点赞数量
+                    var liked_num = $(obj.getElementsByClassName('liked-num'));
+                    liked_num.text(data['liked_num']);
+                } else {
+                    alert(data['message']);
+                }
+            },
+            error: function (comment) {
+                console.log(comment)
+            }
+        });
+    }
+</script>

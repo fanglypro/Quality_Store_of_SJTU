@@ -36,7 +36,8 @@ class SigninView(View):
             user = User.objects.filter(username=username,password=password).first()
             if user:
                 request.session['user_id'] = user.id
-                return redirect(reverse('home'))
+                # return redirect(reverse('home'))
+                return render(request, 'front_tips.html', context={'message': "登陆成功！"})
             else:
                 print('用户名或者密码错误！')
                 # messages.add_message(request,messages.INFO,'用户名或者密码错误！')
@@ -60,7 +61,7 @@ class SignupView(View):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('home'))
+            return redirect(reverse('front:signin'))
         else:
             print(form.errors.get_json_data())
             return redirect(reverse('front:signup'))
@@ -78,9 +79,10 @@ class SigninView_Owner(View):
             user = Owner.objects.filter(username=username,password=password).first()
             if user:
                 request.session['owner_id'] = user.id
-                return redirect(reverse('home'))
+                # return redirect(reverse('home'))
+                return render(request, 'front_tips.html', context={'message': "登陆成功！"})
             else:
-                print('用户名或者密码错误！')
+                # print('用户名或者密码错误！')
                 # messages.add_message(request,messages.INFO,'用户名或者密码错误！')
                 messages.info(request,'用户名或者密码错误！')
                 return redirect(reverse('front:signinowner'))##
@@ -98,11 +100,11 @@ class SignupView_Owner(View):
         return render(request, 'front_signup_owner.html')
 
     def post(self,request):
-        print(request.POST)
+        # print(request.POST)
         form = SignupFormOwner(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('home'))##
+            return redirect(reverse('front:signinowner'))##
         else:
             print(form.errors.get_json_data())
             return redirect(reverse('front:signupowner'))
@@ -158,12 +160,45 @@ class User_detail(View):
         return render(request, 'front_user_detail.html', context=context)
 
     def post(self,request):
+        if 'submit' in request.POST:
+            user_id = request.session.get('user_id')
+            username = request.POST.get('username')
+            telephone = request.POST.get('telephone')
+            password = request.POST.get('password')
+            gender = request.POST.get('gender')
+            # messages.add_message(request, messages.INFO, '性别输入错误')
+            introduction = request.POST.get('introduction')
+            User.objects.filter(pk=user_id).update(username=username,telephone=telephone,gender=gender,introduction=introduction)
+            # return redirect(reverse('home'))
+            return render(request, 'front_tips.html', context={'message': "用户信息修改成功！"})
+        elif 'delete' in request.POST:
+            user_id = request.session.get('user_id')
+            if str(request.POST.get('user_id')) == str(user_id):
+                User.objects.filter(pk=user_id).delete()
+                request.session.flush()
+                return render(request, 'front_tips.html', context={'message': "账户注销成功！"})
+            else:
+                return redirect(reverse('home'))
+
+
+# @check_user
+def change_pwd(request):
+    if request.method == 'GET':
+        print("get")
         user_id = request.session.get('user_id')
-        username = request.POST.get('username')
-        telephone = request.POST.get('telephone')
-        password = request.POST.get('password')
-        gender = request.POST.get('gender')
-        # messages.add_message(request, messages.INFO, '性别输入错误')
-        introduction = request.POST.get('introduction')
-        User.objects.filter(pk=user_id).update(username=username,telephone=telephone,gender=gender,introduction=introduction)
-        return redirect(reverse('home'))
+        user = User.objects.get(pk=user_id)
+        return render(request, 'front_cpwd.html', context={'name': "{}".format(user.username)})
+    else:
+        print("post")
+        user_id = request.session.get('user_id')
+        pwd_old = request.POST.get('password_old')
+        pwd = request.POST.get('password')
+        pwd2 = request.POST.get('password_repeat')
+        if pwd_old != User.objects.get(pk=user_id).password:
+            return render(request, 'front_tips.html', context={'message': "用户原密码错误！"})
+        if pwd==pwd2:
+            User.objects.filter(pk=user_id).update(password=pwd)
+            return render(request, 'front_tips.html', context={'message': "修改密码成功"})
+        else:
+            pass
+            RuntimeError("可能出现恶意伪造修改密码！")

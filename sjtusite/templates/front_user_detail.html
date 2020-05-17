@@ -1,35 +1,95 @@
+{#{% extends 'front_base_old.html' %}#}
+{##}
+{#{% block body %}#}
+{#    <form action="" method="post">#}
+{#        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">#}
+{#        <table>#}
+{#            <tbody>#}
+{#                <tr>#}
+{#                    <td>用户名：</td>#}
+{#                    <td><input type="text" value={{ user.username }} name="username"></td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td>手机：</td>#}
+{#                    <td><input type="text" value={{ user.telephone }} name="telephone"></td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td>密码：</td>#}
+{#                    <td><input type="text" value={{ user.password }} readonly name="password"></td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td>性别（M/F）：</td>#}
+{#                    <td><input type="" value={{ user.gender }} name="gender"></td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td>自我介绍：</td>#}
+{#                    <td><input type="text" value={{ user.introduction }} name="introduction"></td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td></td>#}
+{#                    <td><input type="submit" value="提交"></td>#}
+{#                </tr>#}
+{#            </tbody>#}
+{#        </table>#}
+{#    </form>#}
+{#{% endblock %}#}
+
 {% extends 'front_base.html' %}
 
-{% block body %}
-    <form action="" method="post">
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <table>
-            <tbody>
-                <tr>
-                    <td>用户名：</td>
-                    <td><input type="text" value={{ user.username }} name="username"></td>
-                </tr>
-                <tr>
-                    <td>手机：</td>
-                    <td><input type="text" value={{ user.telephone }} name="telephone"></td>
-                </tr>
-                <tr>
-                    <td>密码：</td>
-                    <td><input type="text" value={{ user.password }} readonly name="password"></td>
-                </tr>
-                <tr>
-                    <td>性别（M/F）：</td>
-                    <td><input type="" value={{ user.gender }} name="gender"></td>
-                </tr>
-                <tr>
-                    <td>自我介绍：</td>
-                    <td><input type="text" value={{ user.introduction }} name="introduction"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="提交"></td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
+{% block Title %}
+    个人信息页
+{% endblock %}
+
+{% block content %}
+<form class="contact_form" action="#" method="post" name="contact_form">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    <ul>
+        <li>
+             <h2>用户信息</h2>
+{#             <span class="required_notification">* 表示必填项</span>#}
+        </li>
+        <li>
+            <label for="name">用户名:</label>
+            <input type="text"  name="username" placeholder="Sunbest" value={{ user.username }} required />
+{#            <span class="form_hint">正确格式为：6~18个字符，可使用字母、数字、下划线，需以字母开头</span>#}
+        </li>
+        <li>
+            <label for="name">密码:</label>
+            <input type="text"  name="password" value={{ user.password }} readonly />
+            <span class="form_hint">修改密码请点击修改密码</span>
+            <a href="{% url 'front:changepwd' %}" style="color: yellowgreen">修改密码</a>
+        </li>
+        <li>
+            <label for="name">学生认证:</label>
+            {% if user.verification %}
+                <input type="text"  name="telephone" value="已认证" readonly />
+            {% else %}
+                <input type="text"  name="telephone" value="未认证" readonly />
+            {% endif %}
+            <a href="#">前往学生认证</a>
+        </li>
+        <li>
+            <label for="name">手机号码:</label>
+            <input type="text"  name="telephone" value={{ user.telephone }} required pattern="^1([38]\d|5[0-35-9]|7[3678])\d{8}$"/>
+        </li>
+        <li>
+            <label for="name">性别:</label>
+            <input id="type" name="gender" type="text" list="typelist" placeholder="请选择" value="{{ user.gender }}" required pattern="[MF]" />
+            <span class="form_hint">请按要求输入性别（M/F）</span>
+                <datalist id="typelist">
+                　　<option>M</option>
+                　　<option>F</option>
+                </datalist>
+        </li>
+        <li>
+            <label for="message">个人简介:</label>
+            <textarea maxlength="120" name="introduction" cols="40" rows="6" placeholder="请输入你的自我介绍吧！">{{ user.introduction }}</textarea>
+        </li>
+        <li>
+            <button class="submit" type="submit" name="submit">提交</button>
+            <button class="submit" type="submit" name="delete">删除账户</button>
+        </li>
+    </ul>
+</form>
 {% endblock %}

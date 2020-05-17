@@ -1,13 +1,14 @@
 <!--对应于shop_with_type.html，在显示优惠信息下的情况-->
 
-{% extends 'dis_list.html' %}
-
-{% block title %}
-    {{ shop_type.type_name }}
+{% extends 'shop/shops_with_type.html' %}
+{% block dis_type_return %}
+    <a href="{% url 'shop:shop_with_type' shop_type.pk %}">返回</a>
 {% endblock %}
-
-{% block shop_list_title %}
-    分类：{{ shop_type.type_name }}
-    <a href="/discount/shop/">查看全部店铺</a>
-    <h5 class="text-right"><a href="{% url 'shop:shop_with_type' shop_type.pk %}">屏蔽优惠信息</a></h5>
+{% block dis_with_type %}
+    {% for discount in discounts %}
+        {% if discount.shop.name == shop.name %}
+            <b> 优惠活动：{{ discount.body }}  </b>
+            <br>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
