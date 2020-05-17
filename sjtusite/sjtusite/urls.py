@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('shop.urls')),
     path('comment/', include('comments.urls')),
-    path('', include('shop.urls')),
-    path('', include('comments.urls')),
+    #path('', include('shop.urls')),
+    #path('', include('comments.urls')),
     path('discount/',include('discount.urls')),
 ]
