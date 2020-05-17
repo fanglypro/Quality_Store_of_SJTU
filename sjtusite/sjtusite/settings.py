@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'discount',
     'front',
+    'likes',
 ]
 
 MIDDLEWARE = [
@@ -98,10 +99,10 @@ DATABASES = {
 # 新的数据库用来实现搜索
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbtest',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sjtudb',
+        'USER': 'sjtumanager',
+        'PASSWORD': 'dishisixiaozu',
     }
 }
 

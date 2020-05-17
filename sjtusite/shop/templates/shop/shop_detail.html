@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load comments_extras %}
+{% load likes_tags %}
 
 {% block title %}
     {{ shop.name }}
@@ -9,7 +10,7 @@
 
 {% load static  %}
 {% block header_extends %}
-    <link rel="stylesheet" href="{% static 'shop/shop.css' %}">
+    <link rel="stylesheet" href="{% static 'shop.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -56,3 +57,7 @@
     </section>
 
 {% endblock %} 
+
+{% block script_extends %}
+
+{% endblock %}

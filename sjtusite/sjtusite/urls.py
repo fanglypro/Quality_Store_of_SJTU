@@ -27,4 +27,5 @@ urlpatterns = [
     path('', include('shop.urls')),
     path('', include('comments.urls')),
     path('discount/',include('discount.urls')),
+    path('', include('likes.urls')),
 ]
