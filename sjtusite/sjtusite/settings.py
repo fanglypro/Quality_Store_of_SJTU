@@ -73,6 +73,7 @@ TEMPLATES = [
                 'front.context_processors.front_user',
                 'django.template.context_processors.media',
                 # 'django.template.context_processors.csrf'
+     
             ],
             'builtins': ['django.templatetags.static']  # static标签内置化
         },
