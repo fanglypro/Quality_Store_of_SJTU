@@ -101,9 +101,9 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sjtudb',
-        'USER': 'sjtumanager',
-        'PASSWORD': 'dishisixiaozu',
+         'NAME': 'sjtusite',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
     }
 }
 
