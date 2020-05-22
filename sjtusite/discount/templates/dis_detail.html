@@ -2,13 +2,16 @@
 
 {% extends 'shop/shop_detail.html' %}
 {% block dis_detail_return %}
-    <a href="{% url 'shop:shop_detail' shop.pk %}">返回</a>
+    <a href="{% url 'shop:shop_detail' shop.pk %}">
+         <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true" style="font-size:20px;color: #000000;"></span>
+    </a>
 {% endblock %}
 {%  block dis_detail %}
+    <div class="alert alert-success" role="alert" style="margin-left: 0px">
     {% for discount in discounts %}
         {% if discount.shop.name == shop.name %}
-            <b> 优惠活动：{{ discount.body }}  </b>
-            <br>
+            <p style="font-size: 25px;font-family:宋体 ;text-align: center;"><strong>{{ discount.body }} </strong></p>
         {% endif %}
     {% endfor %}
+    </div>
 {%  endblock %}

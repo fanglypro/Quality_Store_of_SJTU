@@ -7,7 +7,7 @@
 {% block dis_content %}
     {% for discount in discounts %}
         {% if discount.shop.name == shop.name %}
-            <b> 优惠活动：{{ discount.body }}  </b>
+            <b style="font-size: 15px">{{ discount.body }}  </b>
             <br>
         {% endif %}
     {% endfor %}
