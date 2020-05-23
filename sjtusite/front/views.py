@@ -9,6 +9,7 @@ from django.template.context_processors import debug
 from django.contrib.auth.context_processors import auth
 from django.contrib import messages
 # from django.contrib.messages.context_processors import messages
+import requests
 
 def index(request):
     # user_id = request.session.get('user_id')
@@ -36,6 +37,7 @@ class SigninView(View):
             user = User.objects.filter(username=username,password=password).first()
             if user:
                 request.session['user_id'] = user.id
+                request.session['username'] = user.username
                 # return redirect(reverse('home'))
                 return render(request, 'front_tips.html', context={'message': "登陆成功！"})
             else:
@@ -111,12 +113,25 @@ class SignupView_Owner(View):
 
 
 #验证是否登录的装饰器
-def check_user(func):
+def check_ur(func):
     def inner(*args, **kwargs):
         #判断是否登录
         username = args[0].session.get("user_id", "")
         if username == "":
             username = args[0].session.get("owner_id", "")
+        if username == "":
+            #保存当前的url到session中
+            args[0].session["path"] = args[0].path
+            #重定向到登录页面
+            return redirect(reverse("front:signin"))
+        return func(*args, **kwargs)
+
+    return inner
+
+def check_user(func):
+    def inner(*args, **kwargs):
+        #判断是否登录
+        username = args[0].session.get("user_id", "")
         if username == "":
             #保存当前的url到session中
             args[0].session["path"] = args[0].path
@@ -202,3 +217,13 @@ def change_pwd(request):
         else:
             pass
             RuntimeError("可能出现恶意伪造修改密码！")
+
+
+def test(request):
+    # post_data = {'clientid': '3QMvuozrNInLU5O7PKIS','secretkey':'3175F20BCE5E31010246A4646E6BB93D9DBA926E2C5861CB'}
+    # response = requests.get('https://api.sjtu.edu.cn/v1/me/profile', data=post_data)
+    response = requests.get('https://jaccount.sjtu.edu.cn/oauth2/authorize?response_type=code&scope=essential&client_id=3QMvuozrNInLU5O7PKIS&redirect_uri=https://www.baidu.com')
+    content = response.content
+    print(content)
+    return HttpResponse(content)
+    # return content
