@@ -45,9 +45,14 @@
     <h4><a href="{% url 'discount:discount_detail' shop.pk %}">显示优惠信息</a></h4>
     <hr>
       <h3>发表评论</h3>
+    {% if front_user %}
     {% show_comment_form shop %}
     <div class="comment-list-panel">
+        {% else %}
+        对不起，你没有评论的权限。
+    {% endif %}
     {% show_comments shop %}
+
 </div>
     </section>
 

@@ -15,6 +15,7 @@ def front_user(request):
         try:
             owner = Owner.objects.get(pk=owner_id)
             context['front_owner'] = owner
+            context['shopname'] = Owner.objects.get(pk=owner_id).shopname
         except:
             pass
     return context

@@ -45,15 +45,41 @@
     {% for discount in discounts %}
         {% if discount.shop.name == shop.name %}
             <h4><b> 优惠活动：{{ discount.body }}  </b></h4>
+            {% if front_owner %}
+                <a href="{% url 'discount:discount_delete' discount.id %}">点击删除</a>
+            {% endif %}
         {% endif %}
     {% endfor %}
+    {% if front_owner %}
+       <form class="contact_form" action="#" method="post" name="discount">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" name="shopname" value="{{ shop.id }}">
+    <ul>
+        <li>
+             <h2>添加优惠信息</h2>
+{#             <span class="required_notification">* 表示必填项</span>#}
+        </li>
+        <li>
+            <label for="message">优惠活动:</label>
+            <textarea maxlength="120" name="introduction" cols="40" rows="6" placeholder="请输入优惠活动吧！"></textarea>
+        </li>
+        <li>
+            <button class="submit" type="submit" name="discount">提交</button>
+        </li>
+    </ul>
+</form>
+    {% endif %}
 
     <!--section class="comment-area" id="comment-area">#新增评论区模块-->
     <hr>
       <h3>发表评论</h3>
+    {% if front_user %}
     {% show_comment_form shop %}
     <div class="comment-list-panel">
-        {% show_comments shop %}
+        {% else %}
+        对不起，你没有评论的权限。
+    {% endif %}
+    {% show_comments shop %}
     </div>
     </section>
 

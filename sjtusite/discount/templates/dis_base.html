@@ -34,6 +34,19 @@
                     <li class="{% block nav_search_active %}{% endblock %}"><a href="{% url 'shop:shop_search' %}">搜索</a>
                     </li>
                 </ul>
+            </ul>
+                <ul class="nav navbar-nav navbar-right">
+        {% if front_user %}
+            <li><a href="{% url 'front:user_detail' %}">{{ front_user.username }}</a></li>
+            <li><a href="{% url 'front:logout' %}">注销</a></li>
+        {% elif front_owner %}
+            <li><a href="#">{{ front_owner.username }}</a></li>
+            <li><a href="{% url 'front:logout' %}">注销</a></li>
+        {% else %}
+            <li><a href="{% url 'front:signin' %}">登录</a></li>
+          <li><a href="{% url 'front:signup' %}">注册</a></li>
+        {% endif %}
+      </ul>
             </div>      
         </div>
     </div>
