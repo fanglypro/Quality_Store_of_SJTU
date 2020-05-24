@@ -15,6 +15,8 @@ class Shop(models.Model):
     name = models.CharField(max_length=20)
     shop_type = models.ForeignKey(ShopType, on_delete=models.DO_NOTHING)
     content = models.TextField()
+    grade = models.IntegerField(default=0)
+    grade_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

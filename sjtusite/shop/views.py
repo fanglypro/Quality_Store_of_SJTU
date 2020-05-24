@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Shop, ShopType
 from django.contrib.postgres.search import SearchVector
@@ -47,6 +48,9 @@ def shop_list(request):
 def shop_detail(request, shop_pk):
      context = {}
      context['shop'] = get_object_or_404(Shop, pk=shop_pk)
+     grade_count = context['shop'].grade_count
+     grade = context['shop'].grade
+     context['score'] = grade // grade_count if grade_count != 0 else 0
      return render(request, 'shop/shop_detail.html', context)
 
 
@@ -113,3 +117,28 @@ def shop_search(request):
             return render(request, 'shop/search.html', context)
     
     return render(request,'shop/search.html', context)
+
+
+
+def score_change(request):
+
+
+
+    shop_id = request.GET.get("object_id")
+    score = request.GET.get("score")
+
+    if request.COOKIES.get('score' + shop_id):
+            return JsonResponse({
+             "msg": "repeat"
+           })
+
+    shop = Shop.objects.get(id=shop_id)
+    shop.grade += int(score)
+    shop.grade_count += 1
+    shop.save()
+
+    rsp = JsonResponse({
+        "msg": "success"
+    })
+    rsp.set_cookie('score' + shop_id, 1)
+    return rsp
