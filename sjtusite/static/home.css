@@ -5,3 +5,59 @@ h3.home-content {
     top:50%;
     transform:translate(-50%,-50%);
 }
+img{
+    width: 100%;
+}  
+
+.damu-carousel{
+    margin-top: 50px;
+}
+.damu-carousel,.damu-carousel  .item{
+    height: 500px;
+    overflow: hidden;
+}
+.carousel-caption,{
+    bottom: 50%;
+}
+.damu-threeC{
+    height: 300px;
+    padding:10px 100px 20px 100px;
+}
+.damu-threeC img{
+    height: 300px;
+}
+.damu-threeC h1 {
+   color:#1e88e5;
+   font-weight: bold;
+   font-size:30px;
+}
+.caption {
+  background-color: #f0f0f0;
+}
+.btn-info {
+  background-color: #1e88e5;
+}
+#tablee {
+  padding:20px 0;
+  background-color:#f0f0f0;
+}
+#tablee > .container > .nav-tabs {}
+
+#tablee > .container > .nav-tabs > li {}
+
+#tablee > .container > .nav-tabs > li > a {
+  font-size:16px;
+  color: #333;
+}
+
+#tablee > .container > .nav-tabs > li > a:hover {
+  border-bottom: 4px solid #2196f3;
+}
+
+#tablee > .container > .nav-tabs > li.active {}
+
+#tablee > .container > .nav-tabs > li.active > a{
+  background-color: transparent;
+  border:0;
+  border-bottom: 4px solid #1e88e5;
+}
