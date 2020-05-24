@@ -1,6 +1,13 @@
+<head>
+    <style>
+        .pic
+        {
+            border-radius: 15px;
+        }
+    </style>
+</head>
 {% extends 'base.html' %}
 {% load comments_extras %}
-{% load likes_tags %}
 
 {% block title %}
     {{ shop.name }}
@@ -10,7 +17,7 @@
 
 {% load static  %}
 {% block header_extends %}
-    <link rel="stylesheet" href="{% static 'shop.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/shop.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -23,46 +30,110 @@
         {{ message }}
       </div>
     {% endfor %}
-{% endif %}
-
+    {% endif %}
+    <span style="margin-left: 25px ;position: fixed">
+        <img alt="100x100" src="http://qapuappah.bkt.clouddn.com/logo/{{ shop.pk }}.jpg" class="img-circle" width=100px height=100px>
+    </span>
 
     <div class="container">
-        <div class="row">  
-            <div class="col-xs-10 col-xs-offset-1">
-                <h3>{{ shop.name }}</h3>
-                <ul class="shop-info-description">
-                    <li>分类： 
-                        <a href="{% url 'shop:shop_with_type' shop.shop_type.pk %}">
-                            {{ shop.shop_type }}
+        <div class="row">
+            <div class="col-md-8" >
+                <div style="border: 3px solid lightsalmon;border-radius: 15px 70px;background-color: #ffe6cc">
+                    <h2 style="text-align: center;text-shadow: 5px 5px 5px grey;"><b>{{ shop.name }}</b></h2>
+                    <ul class="shop-info-description">
+                        <li style="margin-left: 30px"><span class="glyphicon glyphicon-tags" aria-hidden="true" ></span>
+                            &nbsp;
+                            <a href="{% url 'shop:shop_with_type' shop.shop_type.pk %}">
+                                <span class="label label-warning" style="font-size: 15px;font-family: 幼圆">{{ shop.shop_type }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="shop-content" style="padding:15px 30px 30px 30px;font-size:20px;font-family: 楷体" >{{ shop.content|linebreaksbr }}</div>
+                </div>
+                <br>
+            </div>
+            <div class="col-md-1" ></div>
+            <div class="col-md-3"  >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 style="text-align: center">位置</h4>
+                        <p style="text-align: center">点击查看大图</p>
+                    </div>
+                    <div class="panel-body">
+                        <a href="http://qaezjxk7x.bkt.clouddn.com/location/{{ shop.pk }}.jpg">
+                            <img alt="100x100" src="http://qaezjxk7x.bkt.clouddn.com/location/{{ shop.pk }}.jpg" width="150px" height="200px" class="center-block">
                         </a>
-                    </li>
-                </ul>   
-                <div class="shop-content">{{ shop.content|linebreaksbr }}</div>
+                    </div>
+                </div>
             </div>
         </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <div class="carousel slide" id="carousel-909682" >
+                    <ol class="carousel-indicators" >
+                        <li class="active" data-slide-to="0" data-target="#carousel-909682"></li>
+                        <li data-slide-to="1" data-target="#carousel-909682"></li>
+                        <li data-slide-to="2" data-target="#carousel-909682"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img class="pic" alt="" src="http://qaezjxk7x.bkt.clouddn.com/{{ shop.pk }}/1.jpg" width="570px"/>
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img class="pic" alt="" src="http://qaezjxk7x.bkt.clouddn.com/{{ shop.pk }}/2.jpg"  width="570px"/>
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img class="pic" alt="" src="http://qaezjxk7x.bkt.clouddn.com/{{ shop.pk }}/3.jpg" width="570px" />
+                            <div class="carousel-caption">
+                            </div>
+                        </div>
+                    </div> <a data-slide="prev" href="#carousel-909682" class="left carousel-control">‹</a> <a data-slide="next" href="#carousel-909682" class="right carousel-control">›</a>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+
+            <div class="col-md-3">
+                <div class="jumbotron">
+                    <a href="{% url 'discount:discount_detail' shop.pk %}">
+                        <div class="btn-group" role="group" aria-label="..." style="margin-left: 33px;" >
+                            <button type="button" class="btn btn-primary" >
+                                <span class="glyphicon glyphicon-yen" aria-hidden="true" style="color: #ffffff;"></span>
+                                <span style="font-size: 18px;color: #ffffff">优惠</span>
+                            </button>
+                            {% block dis_detail_return %}{% endblock %}
+                        </div>
+                    </a>
+                    <div>&nbsp; </div>
+                    {% block dis_detail %}{% endblock %}
+                </div>
+            </div>
+        </div>
+
     </div>
-    <!--section class="comment-area" id="comment-area">#新增评论区模块-->
-    <hr>
-    <h4>
-        <a href="{% url 'discount:discount_detail' shop.pk %}">显示优惠信息</a>
-        <span>{% block dis_detail_return %}{% endblock %}</span>
-    </h4>
-    {% block dis_detail %}{% endblock %}
-    <hr>
-      <h3>发表评论</h3>
-    {% if front_user %}
-    {% show_comment_form shop %}
-    <div class="comment-list-panel">
-        {% else %}
-        对不起，你没有评论的权限。
-    {% endif %}
-    {% show_comments shop %}
 
-</div>
-    </section>
-
-{% endblock %} 
-
-{% block script_extends %}
-
+    <div class="col-md-1"></div>
+    <div class="col-md-8">
+        <hr>
+        <div class="comment-list-panel">
+            {% show_comments shop %}
+        </div>
+        <div class="panel panel-warning">
+            <div class="panel-heading"><h3>发表评论</h3></div>
+            <div class="panel-body">
+                {% if front_user %}
+                    {% show_comment_form shop %}
+                {% else %}
+                    对不起，你没有评论的权限。
+                {% endif %}
+                </section>
+            </div>
+        </div>
+    <div class="col-md-3"></div>
 {% endblock %}

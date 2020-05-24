@@ -3,12 +3,12 @@
 <<<<<<< HEAD
 {% extends 'shop/shop_list.html' %}
 {% block dis_list_return %}
-    <p><a href="/shop/">返回</a><p>
+    <p><a href="/shop/?page={{page}}">返回</a><p>
 {% endblock %}
 {% block dis_content %}
     {% for discount in discounts %}
         {% if discount.shop.name == shop.name %}
-            <b> 优惠活动：{{ discount.body }}  </b>
+            <b style="font-size: 15px">{{ discount.body }}  </b>
             <br>
         {% endif %}
     {% endfor %}

@@ -2,12 +2,12 @@
 
 {% extends 'shop/shops_with_type.html' %}
 {% block dis_type_return %}
-    <a href="{% url 'shop:shop_with_type' shop_type.pk %}">返回</a>
+    <a href="{% url 'shop:shop_with_type' shop_type.pk %}?page={{page}}">返回</a>
 {% endblock %}
 {% block dis_with_type %}
     {% for discount in discounts %}
         {% if discount.shop.name == shop.name %}
-            <b> 优惠活动：{{ discount.body }}  </b>
+            <b style="font-size: 15px"> {{ discount.body }}  </b>
             <br>
         {% endif %}
     {% endfor %}

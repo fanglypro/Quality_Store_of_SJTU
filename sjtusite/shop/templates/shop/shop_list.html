@@ -17,7 +17,7 @@
                     <div class="panel-heading" style="text-align:middle">
                         {% block shop_list_title %}
                            <h3 style="text-align:middle"> 店铺列表（一共有{{ shop_num }}个店铺）</h3>
-                            <h5 class="text-align:middle"><a href="/discount/shop/">显示优惠信息</a></h5>
+                            <h5 class="text-align:middle"><a href="/discount/shop/?page={{page}}">显示优惠信息</a></h5>
                             {% block dis_list_return %}{% endblock %}
                         {% endblock %}
                     </div>
@@ -40,8 +40,12 @@
                                     <div class="thumbnail">
                                         <img src="http://qa7xiarft.bkt.clouddn.com/{{shop.shop_type.pk}}.jpg?imageView2/1/w/250/h/100/q/75" style="background-size:100%" alt="{{shop.name}}" width="100%" height="10"/>
                                         <div class="caption"  style="text-align:center">
-                                            
-                                            <h3  ><a href="{% url 'shop:shop_detail' shop.pk %}" >{{ shop.name }}</a></h3>
+                                            <div>
+                                                <span style="font-size: 25px" ><a href="{% url 'shop:shop_detail' shop.pk %}" >{{ shop.name }}</a></span>
+                                                {% block dis_content %}{% endblock %}
+                                                {% block dis_with_type %}{% endblock %}
+                                            </div>
+
                                             
                                             <!--
                                             <p class="shop-info">
@@ -51,8 +55,6 @@
                                             -->
                                             <div class="col-sm-12 col-md-12">
                                             <p>{{ shop.content|truncatechars:10|linebreaksbr }}</p>
-                                            {% block dis_content %}{% endblock %}
-                                            {% block dis_with_type %}{% endblock %}
                                             </div>
                                             <p>
                                                 <a href="{% url 'shop:shop_detail' shop.pk %}" class="btn btn-primary" role="button">进店</a>

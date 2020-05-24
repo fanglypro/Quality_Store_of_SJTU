@@ -2,20 +2,22 @@
 
 {% extends 'shop/shop_detail.html' %}
 {% block dis_detail_return %}
-    <a href="{% url 'shop:shop_detail' shop.pk %}">返回</a>
+    <a href="{% url 'shop:shop_detail' shop.pk %}">
+         <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true" style="font-size:20px;color: #000000;"></span>
+    </a>
 {% endblock %}
 {%  block dis_detail %}
+    <div class="alert alert-success" role="alert" style="margin-left: 0px">
     {% for discount in discounts %}
         {% if discount.shop.name == shop.name %}
-            <b> 优惠活动：{{ discount.body }}  </b>
+            <p style="font-size: 25px;font-family:宋体 ;text-align: center;"><strong>{{ discount.body }} </strong></p>
             {% if front_owner %}
                 <a href="{% url 'discount:discount_delete' discount.id %}">点击删除</a>
             {% endif %}
-            <br>
         {% endif %}
     {% endfor %}
-
-    {% if front_owner %}
+    </div>
+    {% if front_owner.shopname == shop.name %}
        <form class="contact_form" action="#" method="post" name="discount">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <input type="hidden" name="shopname" value="{{ shop.id }}">
@@ -34,4 +36,4 @@
     </ul>
 </form>
     {% endif %}
-{% endblock %}
+{%  endblock %}
