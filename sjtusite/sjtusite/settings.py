@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'discount',
     'front',
     'likes',
+    'read_statistics',
 ]
 
 MIDDLEWARE = [

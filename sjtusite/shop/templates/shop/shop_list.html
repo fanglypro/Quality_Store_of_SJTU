@@ -2,12 +2,12 @@
 
 {% block title %}交大优铺{% endblock %}
 
-{% block 'nav_shop_active' %}active{% endblock %}
-
 {% load static  %}
 {% block header_extends %}
     <link rel="stylesheet" href="{% static 'shop/shop.css' %}">
 {% endblock %}
+
+{% block nav_shop_active %}active{% endblock %}
 
 {% block content %}
     <div class="container">

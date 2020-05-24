@@ -55,6 +55,10 @@
             background-color: #2196f3;
             color:#ffffff;
         }
+        .btn-inverse {
+          background-color: #2196f3;
+          border:1.5px solid #ffffff;
+        }
     </style>
     {% block header_extends %}{% endblock %}
 </head>
@@ -78,16 +82,12 @@
                     </li>
                     <li class="{% block nav_shop_active %}{% endblock %}"><a href="{% url 'shop:shop_list' %}">店铺</a>
                     </li>
-                    <li class="{% block nav_search_active %}{% endblock %}"><a href="{% url 'shop:shop_search' %}">搜索</a>
-                    </li>
-                    <li><a href="{% url 'front:blog' %}">测试功能<span class="sr-only">(current)</span></a></li>
-                    <li><a href="{% url 'front:video' %}">测试功能2<span class="sr-only">(current)</span></a></li>
                 </ul>
             <form class="navbar-form navbar-left">
                 <div class="form-group">
                   <input type="text" class="form-control" placeholder="Search">
                 </div>
-                <button type="submit" class="btn btn-inverse">Submit</button>
+                <button type="submit" class="btn btn-inverse" style=>Submit</button>
             </form>
                 <ul class="nav navbar-nav navbar-right">
         {% if front_user %}

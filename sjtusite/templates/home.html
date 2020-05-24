@@ -7,6 +7,7 @@
 
 {% block header_extends %}
     <link rel="stylesheet" href="{% static 'home.css' %}">
+    <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
 {% endblock %}
 
 {% block nav_home_active %}active{% endblock %}
@@ -158,20 +159,28 @@
     <div class="container damu-hr">
         <hr />
     </div>
-    <!--标签页-->
+            <!--标签页-->
     <section id="tablee">
       <div class="container" id="damu-tab">
             <ul class="nav nav-tabs" role="tablist" id="damu-list">
-              <li role="presentation" class="active"><a href="#chrome" aria-controls="chrome" role="tab" data-toggle="tab">今日热门店铺</a></li>
-              <li role="presentation"><a href="#firefox" aria-controls="firefox" role="tab" data-toggle="tab">本周热门店铺</a></li>
-              <li role="presentation"><a href="#safari" aria-controls="safari" role="tab" data-toggle="tab">热门优惠活动</a></li>
+              <li role="presentation" class="active"><a href="#hottoday" aria-controls="hottoday" role="tab" data-toggle="tab">今日热门店铺</a></li>
+              <li role="presentation"><a href="#hotyesterday" aria-controls="hotyesterday" role="tab" data-toggle="tab">昨日热门店铺</a></li>
+              <li role="presentation"><a href="#hotweek" aria-controls="hotweek" role="tab" data-toggle="tab">本周热门店铺</a></li>
+              <li role="presentation"><a href="#hotdiscount" aria-controls="hotdiscount" role="tab" data-toggle="tab">热门优惠活动</a></li>
+              <li role="presentation"><a href="#pic" aria-controls="pic" role="tab" data-toggle="tab">网站访问量</a></li>
             </ul>
             <div class="tab-content">
-              <div role="tabpanel" class="tab-pane fade in active" id="chrome">
+              <div role="tabpanel" class="tab-pane fade in active" id="hottoday">
                   <div class="container-fluid">
                       <div class="row">
                           <div class="col-md-7">
-                              <h3>玉兰苑</h3>
+                              <ul>
+                                {% for hot_data in today_hot_data %}
+                                    <li ><a href="{% url 'shop:shop_detail' hot_data.content_object.pk %}" style="font-size:20px">{{ hot_data.content_object.name }}</a >({{ hot_data.read_num }})</li>
+                                {% empty %}
+                                    <li>今天暂时没有热门店铺</li>
+                                {% endfor %}
+                            </ul>
                           </div>
                           <div class="col-md-5">
                               <img src="images/chrome-logo.jpg"  />
@@ -179,11 +188,17 @@
                       </div>
                   </div>
               </div>
-              <div role="tabpanel" class="tab-pane fade" id="firefox">
+              <div role="tabpanel" class="tab-pane fade" id="hotyesterday">
                   <div class="container-fluid">
                       <div class="row">
                           <div class="col-md-7">
-                              <h3>麦当劳</h3>
+                              <ul>
+                                {% for hot_data in yesterday_hot_data %}
+                                    <li><a href="{% url 'shop:shop_detail' hot_data.content_object.pk %}" style="font-size:20px">{{ hot_data.content_object.name }}</a>({{ hot_data.read_num }})</li>
+                                {% empty %}
+                                    <li>昨天暂时没有热门店铺</li>
+                                {% endfor %}
+                            </ul>
                           </div>
                           <div class="col-md-5">
                               <img src="images/firefox-logo.jpg"  />
@@ -191,15 +206,50 @@
                       </div>
                   </div>
               </div>
-              <div role="tabpanel" class="tab-pane fade" id="safari">
+              <div role="tabpanel" class="tab-pane fade" id="hotweek">
                   <div class="container-fluid">
                       <div class="row">
                           <div class="col-md-7">
-                              <h3>优惠活动</h3>
+                              <ul>
+                                {% for hot_shop in seven_days_hot_shops %}
+                                    <li><a href="{% url 'shop:shop_detail' hot_shop.pk %}">{{ hot_shop.name }}</a>({{ hot_shop.read_num_sum }})</li>
+                                {% empty %}
+                                    <li>最近七天暂时没有热门店铺</li>
+                                {% endfor %}
+                            </ul>
                           </div>
                           <div class="col-md-5">
                               <img src="images/safari-logo.jpg"  />
                           </div>
+                      </div>
+                  </div>
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="hotdiscount">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-md-7">
+                              <ul>
+                                {% for hot_shop in seven_days_hot_shops %}
+                                    <li><a href="{% url 'shop_detail' hot_shop.id %}">{{ hot_shop.name }}</a>({{ hot_shop.read_num_sum }})</li>
+                                {% empty %}
+                                    <li>最近七天暂时没有热门店铺</li>
+                                {% endfor %}
+                                
+                            </ul>
+                          </div>
+                          <div class="col-md-5">
+                              <img src="images/safari-logo.jpg"  />
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="pic">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-md-7">
+                              <div id="container" style="width: 600px;height:400px;"></div>
+                          </div>
+                          
                       </div>
                   </div>
               </div>
@@ -214,5 +264,36 @@
     <div class="container">
             &copy;软件工程14组
     </div>
+    <script>
+        // 图表配置
+        var options = {
+            chart: {type: 'line'},
+            title: {text: null},
+            xAxis: {
+                categories: {{ dates|safe }},
+                tickmarkPlacement: 'on',
+            },
+            yAxis: {
+                title: { text: null },
+                labels: { enabled: false },
+                gridLineDashStyle: 'Dash',
+            },
+            series: [{                              // 数据列
+                name: '访问量',                        // 数据列名
+                data: {{ read_nums }}                     // 数据
+            }],
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: { enabled: false },
+            credits: { enabled: false },
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+    </script>
 {% endblock %}
 

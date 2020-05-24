@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Shop, ShopType
+from django.contrib.contenttypes.models import ContentType
+from read_statistics.utils import read_statistics_once_read
 from django.contrib.postgres.search import SearchVector
 from .forms import  SearchForm
 from django.contrib.postgres.search import TrigramSimilarity
@@ -46,12 +48,16 @@ def shop_list(request):
 
 
 def shop_detail(request, shop_pk):
-     context = {}
-     context['shop'] = get_object_or_404(Shop, pk=shop_pk)
-     grade_count = context['shop'].grade_count
-     grade = context['shop'].grade
-     context['score'] = grade // grade_count if grade_count != 0 else 0
-     return render(request, 'shop/shop_detail.html', context)
+    shop = get_object_or_404(Shop, pk=shop_pk)
+    read_cookie_key = read_statistics_once_read(request, shop)
+    context = {}
+    context['shop'] = get_object_or_404(Shop, pk=shop_pk)
+    grade_count = context['shop'].grade_count
+    grade = context['shop'].grade
+    context['score'] = grade // grade_count if grade_count != 0 else 0
+    response = render(request, 'shop/shop_detail.html',context) #响应
+    response.set_cookie(read_cookie_key, 'true')
+    return render(request, 'shop/shop_detail.html', context)
 
 
 

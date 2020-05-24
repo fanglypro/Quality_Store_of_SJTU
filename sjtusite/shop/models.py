@@ -1,5 +1,6 @@
 from django.db import models
-
+from read_statistics.models import ReadNumExpandMethod, ReadDetail 
+from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 from django.urls import reverse
 from django.utils import timezone
@@ -17,6 +18,7 @@ class Shop(models.Model):
     content = models.TextField()
     grade = models.IntegerField(default=0)
     grade_count = models.IntegerField(default=0)
+    read_details = GenericRelation(ReadDetail)
 
     def __str__(self):
         return self.name
