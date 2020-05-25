@@ -31,9 +31,7 @@ def comment(request, shop_pk):
         comment.shop = shop
         comment.name = request.session.get('username')
         comment.save()
-
         messages.add_message(request, messages.SUCCESS, '评论发表成功！', extra_tags='success')
-
         return redirect(shop)
     context = {
         'shop': shop,

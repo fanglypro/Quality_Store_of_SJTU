@@ -9,7 +9,7 @@ from django.template.context_processors import debug
 from django.contrib.auth.context_processors import auth
 from django.contrib import messages
 # from django.contrib.messages.context_processors import messages
-#import requests
+import requests
 
 def index(request):
     # user_id = request.session.get('user_id')
