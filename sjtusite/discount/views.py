@@ -84,19 +84,6 @@ def discount_detail(request,shop_pk):
     context['shop_types'] =  ShopType.objects.all()
     context['discounts'] = Discount.objects.all()
 
-    new_discount = None
-
-    # if request.method == "SHOP":
-    #     discount_form = DiscountForm(data=request.SHOP)
-    #     if  discount_form.is_valid():
-    #         # 通过表单直接创建新数据对象，但是不要保存到数据库中
-    #         new_discount =  discount_form.save(commit=False)
-    #         # 设置外键为当前文章
-    #         new_discount.post = post
-    #         # 将评论数据对象写入数据库
-    #         new_discount.save()
-    # else:
-    #     discount_form = DiscountForm()
     if request.method=='POST':
         if 'discount' in request.POST:
             id = request.POST.get('shopname')
