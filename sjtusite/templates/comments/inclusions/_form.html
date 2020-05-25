@@ -1,18 +1,16 @@
-
 <form action="{% url 'comments:comment' shop.pk %}" method="post" class="comment-form">
   {% csrf_token %}
   <div class="row">
-    <div class="col-md-4">
-      <label for="{{ form.name.id_for_label }}">{{ form.name.label }}：</label>
-      {{ form.name }}
-      {{ form.name.errors }}
-    </div>
 
+
+      <label for="{{ form.text.id_for_label }}" style="margin-left:14px ;font-size: 18px ">{{ form.text.label }}：</label>
     <div class="col-md-12">
-      <label for="{{ form.text.id_for_label }}">{{ form.text.label }}：</label>
+
+
       {{ form.text }}
       {{ form.text.errors }}
-      <button type="submit" class="comment-btn">发表</button>
+        <br>
+      <button type="submit" class="comment-btn"style="font-size: 20px">发表</button>
     </div>
   </div>    <!-- row -->
 </form>
