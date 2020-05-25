@@ -83,12 +83,14 @@
                     <li class="{% block nav_shop_active %}{% endblock %}"><a href="{% url 'shop:shop_list' %}">店铺</a>
                     </li>
                 </ul>
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-inverse" style=>Submit</button>
-            </form>
+                <form action="/shop/search/" class="navbar-form navbar-left" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group" >
+                      <input type="text" class="form-control" placeholder="Search" name="keyword"/>
+                    </div>
+                    <button type="submit" class="btn btn-inverse" >搜索</button>
+                </form>
+
                 <ul class="nav navbar-nav navbar-right">
         {% if front_user %}
             <li><a href="{% url 'front:user_detail' %}">{{ front_user.username }}</a></li>
