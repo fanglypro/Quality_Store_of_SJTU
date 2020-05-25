@@ -26,7 +26,7 @@ class Owner(models.Model):
     password = models.CharField(max_length=16, validators=[MinLengthValidator(6)])
     verification = models.BooleanField(default=False)
     telephone = models.CharField(max_length=11)
-    shopname = models.CharField(max_length=100, validators=[MinLengthValidator(4)], unique=True) # shop_id
+    shopname = models.CharField(max_length=100, validators=[MinLengthValidator(1)], unique=True) # shop_id
     credit = models.SmallIntegerField(default=100)
 
     def __str__(self):

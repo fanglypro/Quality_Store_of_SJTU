@@ -17,23 +17,25 @@
         {% endif %}
     {% endfor %}
     </div>
+    <div style="margin-left: -55px">
     {% if front_owner.shopname == shop.name %}
-       <form class="contact_form" action="#" method="post" name="discount">
+    <form class="contact_form" action="#" method="post" name="discount">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <input type="hidden" name="shopname" value="{{ shop.id }}">
     <ul>
-        <li>
-             <h2>添加优惠信息</h2>
+        <li style="list-style: none">
+             <h3 style="margin-left: 50px">添加优惠信息</h3>
 {#             <span class="required_notification">* 表示必填项</span>#}
         </li>
-        <li>
+        <li style="list-style: none">
             <label for="message">优惠活动:</label>
             <textarea maxlength="120" name="introduction" cols="40" rows="6" placeholder="请输入优惠活动吧！"></textarea>
         </li>
-        <li>
-            <button class="submit" type="submit" name="discount">提交</button>
+        <li style="list-style: none">
+            <button class="submit" type="submit" name="discount" style="background-color:green;color:white;">提交</button>
         </li>
     </ul>
-</form>
+    </form>
     {% endif %}
+    </div>
 {%  endblock %}
