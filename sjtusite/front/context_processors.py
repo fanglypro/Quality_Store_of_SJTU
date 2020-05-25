@@ -1,6 +1,7 @@
-#encoding: utf-8
 from .models import User, Owner
 
+
+# html中用户登陆验证
 def front_user(request):
     user_id = request.session.get('user_id')
     context = {}
@@ -19,7 +20,3 @@ def front_user(request):
         except:
             pass
     return context
-
-
-
-##没有注册

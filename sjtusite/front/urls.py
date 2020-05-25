@@ -11,5 +11,5 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('cpwd/', views.change_pwd, name='changepwd'),
     path('user/detail/', views.User_detail.as_view(), name='user_detail'),
-    path('test/', views.test, name='test'),
+    path('test/', views.test, name='test'),  # jaccount认证测试，未完成
 ]

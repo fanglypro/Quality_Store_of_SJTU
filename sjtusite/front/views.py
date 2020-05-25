@@ -1,19 +1,10 @@
-# encoding: utf-8
-
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.views.generic import View
 from .forms import SignupForm, SigninForm, SignupFormOwner, SigninFormOwner
 from .models import User, Owner
-from django.template.context_processors import debug
-from django.contrib.auth.context_processors import auth
 from django.contrib import messages
-# from django.contrib.messages.context_processors import messages
 import requests
-
-
-def index(request):
-    return render(request, 'front/front_index.html')
 
 
 class SigninView(View):
@@ -29,16 +20,11 @@ class SigninView(View):
             if user:
                 request.session['user_id'] = user.id
                 request.session['username'] = user.username
-                # return redirect(reverse('home'))
                 return render(request, 'front/front_tips.html', context={'message': "登陆成功！"})
             else:
-                print('用户名或者密码错误！')
-                # messages.add_message(request,messages.INFO,'用户名或者密码错误！')
                 messages.info(request, '用户名或者密码错误！')
                 return redirect(reverse('front:signin'))
         else:
-            # errors = form.errors.get_json_data()
-            # print(errors)
             errors = form.get_error()
             for error in errors:
                 messages.info(request, error)
@@ -72,16 +58,11 @@ class SigninView_Owner(View):
             user = Owner.objects.filter(username=username, password=password).first()
             if user:
                 request.session['owner_id'] = user.id
-                # return redirect(reverse('home'))
                 return render(request, 'front/front_tips.html', context={'message': "登陆成功！"})
             else:
-                # print('用户名或者密码错误！')
-                # messages.add_message(request,messages.INFO,'用户名或者密码错误！')
                 messages.info(request, '用户名或者密码错误！')
-                return redirect(reverse('front:signinowner'))  ##
+                return redirect(reverse('front:signinowner'))
         else:
-            # errors = form.errors.get_json_data()
-            # print(errors)
             errors = form.get_error()
             for error in errors:
                 messages.info(request, error)
@@ -93,13 +74,12 @@ class SignupView_Owner(View):
         return render(request, 'front/front_signup_owner.html')
 
     def post(self, request):
-        # print(request.POST)
         form = SignupFormOwner(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('front:signinowner'))  ##
+            return redirect(reverse('front:signinowner'))
         else:
-            print(form.errors.get_json_data())
+            # print(form.errors.get_json_data())
             return redirect(reverse('front:signupowner'))
 
 
@@ -168,11 +148,8 @@ class User_detail(View):
             telephone = request.POST.get('telephone')
             password = request.POST.get('password')
             gender = request.POST.get('gender')
-            # messages.add_message(request, messages.INFO, '性别输入错误')
             introduction = request.POST.get('introduction')
-            User.objects.filter(pk=user_id).update(username=username, telephone=telephone, gender=gender,
-                                                   introduction=introduction)
-            # return redirect(reverse('home'))
+            User.objects.filter(pk=user_id).update(username=username, telephone=telephone, gender=gender, introduction=introduction)
             return render(request, 'front/front_tips.html', context={'message': "用户信息修改成功！"})
         elif 'delete' in request.POST:
             user_id = request.session.get('user_id')
@@ -187,12 +164,10 @@ class User_detail(View):
 @check_user
 def change_pwd(request):
     if request.method == 'GET':
-        print("get")
         user_id = request.session.get('user_id')
         user = User.objects.get(pk=user_id)
         return render(request, 'front/front_cpwd.html', context={'name': "{}".format(user.username)})
     else:
-        print("post")
         user_id = request.session.get('user_id')
         pwd_old = request.POST.get('password_old')
         pwd = request.POST.get('password')
@@ -208,10 +183,8 @@ def change_pwd(request):
 
 
 def test(request):
-    # post_data = {'clientid': '3QMvuozrNInLU5O7PKIS','secretkey':'3175F20BCE5E31010246A4646E6BB93D9DBA926E2C5861CB'}
-    # response = requests.get('https://api.sjtu.edu.cn/v1/me/profile', data=post_data)
-    response = requests.get(
-        'https://jaccount.sjtu.edu.cn/oauth2/authorize?response_type=code&scope=essential&client_id=3QMvuozrNInLU5O7PKIS&redirect_uri=https://www.baidu.com')
+    # 'clientid': '3QMvuozrNInLU5O7PKIS' 'secretkey':'3175F20BCE5E31010246A4646E6BB93D9DBA926E2C5861CB'
+    response = requests.get('https://jaccount.sjtu.edu.cn/oauth2/authorize?response_type=code&scope=essential&client_id=3QMvuozrNInLU5O7PKIS&redirect_uri=https://www.baidu.com')
     content = response.content
     print(content)
     return HttpResponse(content)
