@@ -4,25 +4,7 @@ from django.views.generic import View
 from .forms import SignupForm, SigninForm, SignupFormOwner, SigninFormOwner
 from .models import User, Owner
 from django.contrib import messages
-<<<<<<< HEAD
-# from django.contrib.messages.context_processors import messages
 import requests
-
-def index(request):
-    # user_id = request.session.get('user_id')
-    # context = {}
-    # try:
-    #     user = User.objects.get(pk=user_id)
-    #     context['front_user'] = user
-    # except:
-    #     pass
-    # users = User.objects.all()
-    # for user in users:
-    #     print(user)
-    return render(request, 'front_index.html')
-=======
-import requests
->>>>>>> 299aa164adeb4e8c65b0a8fa1739a33df9ea855b
 
 
 class SigninView(View):
