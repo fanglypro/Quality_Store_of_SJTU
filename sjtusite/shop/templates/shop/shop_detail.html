@@ -1,9 +1,7 @@
 <head>
     <style>
         .pic
-        {
-            border-radius: 15px;
-        }
+        {  border-radius: 15px;  }
     </style>
 </head>
 {% extends 'base.html' %}
@@ -41,6 +39,9 @@
             <div class="col-md-8" >
                 <div style="border: 3px solid lightsalmon;border-radius: 15px 70px;background-color: #ffe6cc">
                     <h2 style="text-align: center;text-shadow: 5px 5px 5px grey;"><b>{{ shop.name }}</b></h2>
+                    <div align="center">
+                     <div id="star" data-score="{{ score }}"></div>
+                </div>
                     <ul class="shop-info-description">
                         <li style="margin-left: 30px"><span class="glyphicon glyphicon-tags" aria-hidden="true" ></span>
                             &nbsp;
@@ -48,7 +49,6 @@
                                 <span class="label label-warning" style="font-size: 15px;font-family: 幼圆">{{ shop.shop_type }}</span>
                             </a>
                         </li>
-                        
                     </ul>
                     <hr>
                     <div class="shop-content" style="padding:15px 30px 30px 30px;font-size:20px;font-family: 楷体" >{{ shop.content|linebreaksbr }}</div>
@@ -57,8 +57,6 @@
                 <br>
                 <span>阅读({{ shop.get_read_num }})</span>
                 <br>
-                <span>评分</span>
-                <div id="star" data-score="{{ score }}"></div>
                 <br>
             </div>
             <div class="col-md-1" ></div>
@@ -80,7 +78,7 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-6">
-                <div class="carousel slide" id="carousel-909682" >
+                <div class="carousel slide" id="carousel-909682" data-ride="carousel" data-interval="2500">
                     <ol class="carousel-indicators" >
                         <li class="active" data-slide-to="0" data-target="#carousel-909682"></li>
                         <li data-slide-to="1" data-target="#carousel-909682"></li>
@@ -110,7 +108,7 @@
             <div class="col-md-3">
                 <div class="jumbotron">
                     <a href="{% url 'discount:discount_detail' shop.pk %}">
-                        <div class="btn-group" role="group" aria-label="..." style="margin-left: 33px;" >
+                        <div class="btn-group" role="group" aria-label="..." style="margin: 0px auto;display: table;" >
                             <button type="button" class="btn btn-primary" >
                                 <span class="glyphicon glyphicon-yen" aria-hidden="true" style="color: #ffffff;"></span>
                                 <span style="font-size: 18px;color: #ffffff">优惠</span>
@@ -123,7 +121,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="col-md-1"></div>

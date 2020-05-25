@@ -1,48 +1,4 @@
-{#{% extends 'front_base_old.html' %}#}
-{##}
-{#{% block body %}#}
-{#    <form action="" method="post">#}
-{#        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">#}
-{#        <table>#}
-{#            <tbody>#}
-{#                <tr>#}
-{#                    <td>用户名：</td>#}
-{#                    <td><input type="text" name="username"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>手机：</td>#}
-{#                    <td><input type="text" name="telephone"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>密码：</td>#}
-{#                    <td><input type="text" name="password"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>重复密码：</td>#}
-{#                    <td><input type="text" name="password_repeat"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>性别：</td>#}
-{#                    <td><input type="hidden" value="M" name="gender"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>简介：</td>#}
-{#                    <td><input type="hidden" value="" name="introduction"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td></td>#}
-{#                    <td><input type="submit" value="提交"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td></td>#}
-{#                    <td><a href="{% url 'front:signupowner' %}">我是商家</a></td>#}
-{#                </tr>#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </form>#}
-{#{% endblock %}#}
-
-{% extends 'front_base.html' %}
+{% extends 'front/front_base.html' %}
 
 {% block Title %}
     用户注册页面

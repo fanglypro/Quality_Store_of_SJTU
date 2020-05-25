@@ -26,7 +26,8 @@ class Owner(models.Model):
     password = models.CharField(max_length=16, validators=[MinLengthValidator(6)])
     verification = models.BooleanField(default=False)
     telephone = models.CharField(max_length=11)
-    shopname = models.CharField(max_length=100, validators=[MinLengthValidator(4)], unique=True) # shop_id
+    # 数据库中的shop信息由管理员添加
+    shopname = models.CharField(max_length=100, validators=[MinLengthValidator(1)], unique=True)
     credit = models.SmallIntegerField(default=100)
 
     def __str__(self):

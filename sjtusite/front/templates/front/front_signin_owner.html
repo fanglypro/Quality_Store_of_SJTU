@@ -1,0 +1,35 @@
+{% extends 'front/front_base.html' %}
+
+{% block Title %}
+    商家登陆页面
+{% endblock %}
+
+{% block content %}
+<form class="contact_form" action="#" method="post" name="contact_form">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <ul>
+        <li>
+             <h2>商家登陆</h2>
+             <span class="required_notification">* 表示必填项</span>
+        </li>
+        <li>
+            <label for="name">*用户名:</label>
+            <input type="text"  name="username" placeholder="Sunbest" required />
+            <span class="form_hint">正确格式为：6~18个字符，可使用字母、数字、下划线，需以字母开头</span>
+        </li>
+        <li>
+            <label for="name">*密码:</label>
+            <input type="text"  name="password" required />
+            <span class="form_hint">正确格式为：6~18个字符，可使用字母、数字、下划线</span>
+        </li>
+        <li>
+            <button class="submit" type="submit">提交</button>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <a href="{% url 'front:signin' %}"><input name="登陆" type="button" id="btn1" title="登注册" value="用户登陆" style="height: 30px"/></a>
+        </li>
+    </ul>
+</form>
+{% endblock %}

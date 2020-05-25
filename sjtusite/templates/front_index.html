@@ -1,9 +1,0 @@
-{% extends 'front_base_old.html' %}
-
-{% block body %}
-    {% load static %}
-    首页{{ request.path }}
-    <br>
-{#    <img src="{{ MEDIA_URL }}logo.jpg" alt="">#}
-    <img src="{% static 'man.jpg' %}" alt="">
-{% endblock %}

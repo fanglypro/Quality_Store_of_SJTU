@@ -1,47 +1,4 @@
-{#{% extends 'base.html' %}#}
-
-{#{% block body %}#}
-{#    商家注册页面#}
-{#    <br>#}
-{#    <form action="" method="post">#}
-{#        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">#}
-{#        <table>#}
-{#            <tbody>#}
-{#                <tr>#}
-{#                    <td>用户名：</td>#}
-{#                    <td><input type="text" name="username"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>手机：</td>#}
-{#                    <td><input type="text" name="telephone"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>密码：</td>#}
-{#                    <td><input type="text" name="password"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>重复密码：</td>#}
-{#                    <td><input type="text" name="password_repeat"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>店铺名：</td>#}
-{#                    <td><input type="text" name="shopname"></td>#}
-{#                    <input type="hidden" value=100 name="credit">#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td>信用积分：</td>#}
-{#                    <td><input type="text" value=100 readonly name="credit"></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td></td>#}
-{#                    <td><input type="submit" value="提交"></td>#}
-{#                </tr>#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </form>#}
-{#{% endblock %}#}
-
-{% extends 'front_base.html' %}
+{% extends 'front/front_base.html' %}
 
 {% block Title %}
     商家注册页面
