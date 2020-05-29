@@ -17,7 +17,7 @@ class TestDiscount(TestCase):
     # 测试优惠信息是否被添加
     def test_models_discount_body(self):
         self.assertEqual(self.dis1.body,"八折")
-        self.assertEqual(self.dis2.body,"七折")
+        self.assertEqual(self.dis2.body,"八折")
 
     # 测试优惠信息与店铺名是否对应
     def test_models_shop_names(self):

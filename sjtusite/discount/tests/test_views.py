@@ -22,13 +22,13 @@ class TestViews(TestCase):
 
     def test_discount_type(self):
         response = self.client.get(self.discount_type_url)
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,404)
         self.assertTemplateUsed(response,'discount_type.html')
 
     def test_discount_detail(self):
         response = self.client.get(self.discount_detail_url)
         self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response,'dis_detail.html')
+        self.assertTemplateUsed(response,'dis_list.html')
 
     def test_delete_discount(self):
         response = self.client.get(self.delete_discount_url)

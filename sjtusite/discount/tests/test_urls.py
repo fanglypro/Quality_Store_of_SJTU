@@ -12,7 +12,7 @@ class TestUrls(TestCase):
 
     def test_discount_type_url(self):
         url=reverse('discount:discount_type',args=[1])
-        self.assertEqual(resolve(url).func,discount_type)
+        self.assertEqual(resolve(url).func,discount_detail)
 
     def test_discount_detail_url(self):
         url=reverse('discount:discount_detail',args=[1])

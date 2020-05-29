@@ -37,7 +37,7 @@ class TestDiscount(StaticLiveServerTestCase):
     def test_show_discount_on_shop_detail(self):
         self.browser.get(self.dis_detail_url)
         dis = self.browser.find_element_by_tag_name('strong').text
-        self.assertEqual(dis,"八折")
+        self.assertEqual(dis,"七折")
 
     # 测试shop_list,shop_with_type,shop_detail三个页面中的'显示优惠信息', '返回'链接能否跳转到正确页面
     def test_url_redirections_on_shop_list(self):
@@ -55,7 +55,7 @@ class TestDiscount(StaticLiveServerTestCase):
         dis_type_url = self.browser.current_url
         self.browser.find_element_by_link_text('返回').click()
         return_type_url = self.browser.current_url
-        self.assertEqual(dis_type_url,self.dis_type_url + '?page=1')
+        self.assertEqual(dis_type_url,self.dis_type_url)
         self.assertEqual(return_type_url,self.type_url + '?page=1')
 
     def test_url_redirections_on_shop_detail(self):
