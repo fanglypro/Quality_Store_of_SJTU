@@ -39,5 +39,5 @@ def comment(request, shop_pk):
     }
     messages.add_message(request, messages.ERROR, '评论发表失败！请修改表单中的错误后重新提交。', extra_tags='danger')
 
-    return render(request, 'comments/preview.html', context=context)
+    return render(request, 'preview.html', context=context)
 

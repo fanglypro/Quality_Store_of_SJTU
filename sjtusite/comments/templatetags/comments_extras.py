@@ -4,7 +4,7 @@ from ..forms import CommentForm
 register = template.Library()
 
 
-@register.inclusion_tag('comments/inclusions/_form.html', takes_context=True)
+@register.inclusion_tag('inclusions/_form.html', takes_context=True)
 def show_comment_form(context, shop, form=None):
     if form is None:
         form = CommentForm()
@@ -14,7 +14,7 @@ def show_comment_form(context, shop, form=None):
     }
 
 
-@register.inclusion_tag('comments/inclusions/_list.html', takes_context=True)
+@register.inclusion_tag('inclusions/_list.html', takes_context=True)
 def show_comments(context, shop):
     comment_list = shop.comment_set.all().order_by('-created_time')
     comment_count = comment_list.count()

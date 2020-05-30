@@ -39,9 +39,10 @@
             <div class="col-md-8" >
                 <div style="border: 3px solid lightsalmon;border-radius: 15px 70px;background-color: #ffe6cc">
                     <h2 style="text-align: center;text-shadow: 5px 5px 5px grey;"><b>{{ shop.name }}</b></h2>
+                    <!--评分块-->
                     <div align="center">
                      <div id="star" data-score="{{ score }}"></div>
-                </div>
+                    </div>
                     <ul class="shop-info-description">
                         <li style="margin-left: 30px"><span class="glyphicon glyphicon-tags" aria-hidden="true" ></span>
                             &nbsp;
@@ -142,6 +143,8 @@
         </div>
     <div class="col-md-3"></div>
 
+
+    <!--评分请求-->
     <script>
         $('#star').raty({
             score: function () {
