@@ -6,10 +6,23 @@
     <p><a href="/shop/?page={{page}}">返回</a><p>
 {% endblock %}
 {% block dis_content %}
+    <!-- 判断店铺是否有优惠信息，有则显示，没有则返回‘暂无优惠’-->
+    <script>
+        var dis_num = 0;
+    </script>
     {% for discount in discounts %}
         {% if discount.shop.name == shop.name %}
-            <b style="font-size: 15px">{{ discount.body }}  </b>
-            <br>
+            <b style="font-size: 15px;color: darkseagreen">{{ discount.body|truncatechars:10|linebreaksbr }}</b>
+            <!-- 统计每个店铺的优惠信息数量 -->
+            <script>
+                dis_num++;
+            </script>
         {% endif %}
     {% endfor %}
+    <i style="font-size: 15px; color: orangered ">
+        <script>
+            if (dis_num == 0)
+            document.write('暂无优惠')
+        </script>
+    </i>
 {% endblock %}

@@ -8,14 +8,28 @@
 {% endblock %}
 {%  block dis_detail %}
     <div class="alert alert-success" role="alert" style="margin-left: 0px">
-    {% for discount in discounts %}
-        {% if discount.shop.name == shop.name %}
-            <p style="font-size: 25px;font-family:宋体 ;text-align: center;"><strong>{{ discount.body }} </strong></p>
-            {% if front_owner %}
-                <a href="{% url 'discount:discount_delete' discount.id %}">点击删除</a>
+    <!-- 判断店铺是否有优惠信息，有则显示，没有则返回‘暂无优惠’-->
+        <script>
+            var dis_num = 0;
+        </script>
+        {% for discount in discounts %}
+            {% if discount.shop.name == shop.name %}
+                <p style="font-size: 25px;font-family:宋体 ;text-align: center;"><strong>{{ discount.body }} </strong></p>
+                <!-- 统计每个店铺的优惠信息数量 -->
+                <script>
+                    dis_num++;
+                </script>
+                {% if front_owner %}
+                    <a href="{% url 'discount:discount_delete' discount.id %}">点击删除</a>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+        <i style="font-size: 20px;font-family:宋体">
+            <script>
+                if (dis_num == 0)
+                document.write('暂无优惠')
+            </script>
+        </i>
     </div>
     <div style="margin-left: -55px">
     {% if front_owner.shopname == shop.name %}
