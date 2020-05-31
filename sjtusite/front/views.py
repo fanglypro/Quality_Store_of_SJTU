@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse
 from django.views.generic import View
 from .forms import SignupForm, SigninForm, SignupFormOwner, SigninFormOwner
 from .models import User, Owner
 from django.contrib import messages
-import requests
+from . import uid
 
 
 class SigninView(View):
@@ -182,9 +181,11 @@ def change_pwd(request):
             RuntimeError("可能出现恶意伪造修改密码！")
 
 
-def test(request):
+def authorize(request):
     # 'clientid': '3QMvuozrNInLU5O7PKIS' 'secretkey':'3175F20BCE5E31010246A4646E6BB93D9DBA926E2C5861CB'
-    response = requests.get('https://jaccount.sjtu.edu.cn/oauth2/authorize?response_type=code&scope=essential&client_id=3QMvuozrNInLU5O7PKIS&redirect_uri=https://www.baidu.com')
-    content = response.content
-    print(content)
-    return HttpResponse(content)
+    if not request.GET.get('code'):
+        return redirect('https://jaccount.sjtu.edu.cn/oauth2/authorize?response_type=code&scope=essential&client_id=3QMvuozrNInLU5O7PKIS&redirect_uri=http://127.0.0.1:8000/authorize/{}/'.format(uid))
+    else:
+        user_id = request.session.get('user_id')
+        User.objects.filter(pk=user_id).update(verification=1)
+        return render(request, 'front/front_tips.html', context={'message': "学生验证成功！"})

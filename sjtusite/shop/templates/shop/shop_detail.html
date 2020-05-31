@@ -134,7 +134,11 @@
             <div class="panel-heading"><h3>发表评论</h3></div>
             <div class="panel-body">
                 {% if front_user %}
-                    {% show_comment_form shop %}
+                    {% if front_user.verification %}
+                        {% show_comment_form shop %}
+                    {% else %}
+                        您尚未验证，请前往 <a href="{% url 'front:authorize' %}">学生验证页面</a>。
+                    {% endif %}
                 {% else %}
                     对不起，你没有评论的权限。
                 {% endif %}

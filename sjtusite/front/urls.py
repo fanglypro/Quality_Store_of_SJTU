@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, uid
 
 app_name = 'front'
 
@@ -11,5 +11,5 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('cpwd/', views.change_pwd, name='changepwd'),
     path('user/detail/', views.User_detail.as_view(), name='user_detail'),
-    path('test/', views.test, name='test'),  # jaccount认证测试，未完成
+    path('authorize/{}/'.format(uid), views.authorize, name='authorize')
 ]

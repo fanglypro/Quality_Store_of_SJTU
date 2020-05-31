@@ -99,12 +99,21 @@ DATABASES = {
 '''
 #——————————————————————————————————————
 # 新的数据库用来实现搜索
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'store',
+#         'USER': 'postgres',
+#         'PASSWORD': '123456',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'store',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
+        'NAME': 'sjtu',
+        'USER': 'sjtumanager',
+        'PASSWORD': 'dishixiaozu',
     }
 }
 

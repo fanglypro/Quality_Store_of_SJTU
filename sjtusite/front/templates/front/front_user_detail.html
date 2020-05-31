@@ -30,8 +30,8 @@
                 <input type="text"  name="telephone" value="已认证" readonly />
             {% else %}
                 <input type="text"  name="telephone" value="未认证" readonly />
+                <a href="{% url 'front:authorize' %}">前往学生认证</a>
             {% endif %}
-            <a href="#">前往学生认证</a>
         </li>
         <li>
             <label for="name">手机号码:</label>
